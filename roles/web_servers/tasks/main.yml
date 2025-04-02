@@ -2,11 +2,17 @@
   tags: apache,apache2,ubuntu
   apt:
     name:
-      - apache2
-      - libapache2-mod-php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
     update_cache: yes
-  when: ansible_distribution == "Ubuntu"
+
+- name: start and enable apache service
+  tags: apache, httpd
+  service:
+    name: "{{ apache_service }}"
+    state: started
+    enabled: yes
 
 - name: copy default html file for site
   tags: apache,apache2,httpd
